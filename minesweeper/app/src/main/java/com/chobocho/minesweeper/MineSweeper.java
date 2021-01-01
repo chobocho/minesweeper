@@ -7,6 +7,13 @@ public interface MineSweeper {
     final int WIN = 3;
     final int GAME_OVER = 4;
 
+    final int EMPTY = 0;
+    final int BOOM = 10;
+    final int CRASH = 11;
+    final int FLAG = 12;
+    final int QUESTION = 13;
+    final int NOT_OPEN = 14;
+
     /**
      * 
      */
@@ -35,4 +42,6 @@ public interface MineSweeper {
     public void idle();
 
     public int getBoomCount();
+
+    public int[][] getBoard();
 }

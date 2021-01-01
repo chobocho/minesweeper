@@ -11,7 +11,10 @@ public class MineSweeperImplTest {
 
     @Before
     public void setUp() throws Exception {
-        mineSweeper = new MineSweeperImpl();
+        int boardWidth = 10;
+        int boardHeight = 10;
+        int boomCount = 10;
+        mineSweeper = new MineSweeperImpl(boardWidth, boardHeight, boomCount);
     }
 
     @After

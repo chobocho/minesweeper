@@ -17,7 +17,6 @@ public class UiManagerImpl implements UiManager, GameObserver {
     Context mContext;
     BoardProfile mProfile;
 
-
     State uiState;
     State idleState;
     State playState;
@@ -29,25 +28,42 @@ public class UiManagerImpl implements UiManager, GameObserver {
     public UiManagerImpl(Context context, BoardProfile profile, MineSweeper mineSweeper) {
         mContext = context;
         mProfile = profile;
-        init();
-        loadImage();
+        beforeInitState();
+        initState(mineSweeper);
         mineSweeper.register(this);
     }
 
 
-    private void init() {
-        idleState = new IdleState(mProfile);
-        playState = new PlayState();
-        pauseState = new PauseState();
-        winState = new WinState();
-        gameoverState = new GameOverState();
+    private void initState(MineSweeper mineSweeper) {
+        idleState = new IdleState(mProfile, mineSweeper, mTile);
+        playState = new PlayState(mProfile, mineSweeper, mTile);
+        pauseState = new PauseState(mProfile, mTile);
+        winState = new WinState(mProfile, mTile);
+        gameoverState = new GameOverState(mProfile, mTile);
         uiState = idleState;
     }
 
+    private void beforeInitState() {
+        loadImage();
+    }
 
     private void loadImage() {
-        mTile = new Bitmap[10];
+        mTile = new Bitmap[15];
         mTile[0] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n0);
+        mTile[1] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n1);
+        mTile[2] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n2);
+        mTile[3] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n3);
+        mTile[4] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n4);
+        mTile[5] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n5);
+        mTile[6] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n6);
+        mTile[7] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n7);
+        mTile[8] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n8);
+        mTile[9] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n9);
+        mTile[10] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.boom);
+        mTile[11] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.crash);
+        mTile[FLAG] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.flag);
+        mTile[QUESTION] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.question);
+        mTile[COVER] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.cover);
     }
 
 
@@ -80,6 +96,6 @@ public class UiManagerImpl implements UiManager, GameObserver {
 
     @Override
     public void onDraw(Canvas canvas) {
-        uiState.onDraw2(canvas, mTile);
+        uiState.onDraw(canvas);
     }
 }

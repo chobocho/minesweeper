@@ -3,15 +3,20 @@ package com.chobocho.game.ui;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 
+import com.chobocho.minesweeper.MineSweeper;
+
 public class State {
+    protected  Bitmap[] images;
+
     public State() {
+
     }
 
     public void onDraw(Canvas canvas) {
 
     }
 
-    public void onDraw2(Canvas canvas, Bitmap[] images) {
-
+    protected int getImageNumber(int[][] board, int i, int j) {
+        return board[j][i];
     }
 }

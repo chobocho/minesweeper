@@ -27,7 +27,7 @@ public class BoardProfile {
         mBoardHeight = easy_board_height;
 
         int block_width = (int) (screenW / 10);
-        int block_height = (int) (screenH / 12);
+        int block_height = (int) (screenH / (10+4));
         mblockSize = Math.min(block_width, block_height);
 
         mStartX = (int)((screenW - mblockSize*10)/2);

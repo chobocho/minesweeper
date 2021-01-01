@@ -4,6 +4,11 @@ import java.util.ArrayList;
 
 public class MineSweeperImpl implements MineSweeper {
     private ArrayList<GameObserver> observers;
+    private int boardWidth;
+    private int boardHeight;
+    private int boomCount;
+
+    Board board;
     State gameState;
     State idleState;
     State playState;
@@ -11,15 +16,27 @@ public class MineSweeperImpl implements MineSweeper {
     State gameOverState;
     State winState;
 
-    public MineSweeperImpl() {
+    public MineSweeperImpl(int boardWidth, int boardHeight, int boomCount) {
+        this.boardWidth = boardWidth;
+        this.boardHeight = boardHeight;
+        this.boomCount = boomCount;
         init();
+    }
+
+    public void setBoardInfo(int boardWidth, int boardHeight, int boomCount) {
+        this.boardWidth = boardWidth;
+        this.boardHeight = boardHeight;
+        this.boomCount = boomCount;
+        this.board.setBoardInfo(boardWidth, boardHeight, boomCount);
     }
 
     public void init() {
         observers = new ArrayList<>();
 
+        board = new BoardImpl(boardWidth, boardHeight, boomCount);
+
         idleState = new IdleState();
-        playState = new PlayState(10);
+        playState = new PlayState(boomCount);
         pauseState = new PauseState();
         gameOverState = new GameOverState();
         winState = new WinState();
@@ -64,5 +81,10 @@ public class MineSweeperImpl implements MineSweeper {
     @Override
     public int getBoomCount() {
         return gameState.getBoomCount();
+    }
+
+    @Override
+    public int[][] getBoard() {
+        return board.getBoard();
     }
 }
