@@ -2,6 +2,8 @@ package com.chobocho.game.ui;
 
 import android.graphics.Canvas;
 
+import com.chobocho.game.MineSweeperView;
+
 public interface UiManager {
     int FLAG = 12;
     int QUESTION = 13;
@@ -12,7 +14,10 @@ public interface UiManager {
     int BOOM_FACE = 17;
     int WIN_FACE = 18;
     int PAUSE_FACE = 19;
+    int NEW_GAME = 20;
+    int RESUME = 21;
+    int NUMBER_0 = 22;
 
-    int NUMBER_0 = 20;
+    public void setListener(MineSweeperView.ViewListener listener);
     public void onDraw(Canvas canvas);
 }

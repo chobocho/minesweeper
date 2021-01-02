@@ -110,11 +110,18 @@ public class BoardImpl implements Board {
 
     @Override
     public boolean isOpen(int x, int y) {
+        if (!isRange(x, y)) {
+            return false;
+        }
         return tiles[y][x].isOpen();
     }
 
     @Override
     public void open(int x, int y) {
+        if (!isRange(x, y)) {
+            return;
+        }
+
         if (tiles[y][x].hasFlag()) {
             tiles[y][x].setFlag(false);
             incUnusedFlagCount();
@@ -171,11 +178,19 @@ public class BoardImpl implements Board {
 
     @Override
     public boolean hasBoom(int x, int y) {
+        if (!isRange(x, y)) {
+            return false;
+        }
+
         return tiles[y][x].hasBoom();
     }
 
     @Override
     public void setFlag(int x, int y) {
+        if (!isRange(x, y)) {
+            return;
+        }
+
         if (tiles[y][x].isOpen()) {
             return;
         }
@@ -189,6 +204,10 @@ public class BoardImpl implements Board {
             tiles[y][x].setFlag(true);
             decUnusedFlagCount();
         }
+    }
+
+    private boolean isRange(int x, int y) {
+        return (x >= 0) && (x < boardWidth) && (y >= 0) && (y < boardHeight);
     }
 
     private void decUnusedFlagCount() {
@@ -209,6 +228,33 @@ public class BoardImpl implements Board {
     public boolean isFinish() {
         Log.d(TAG, "unopened_tile_count: " + unopened_tile_count + " boomCount: " + boomCount);
         return unopened_tile_count == boomCount;
+    }
+
+    @Override
+    public synchronized void getGameState(GameInfo gameInfo) {
+        gameInfo.setUnopenedTileCount(this.unopened_tile_count);
+        gameInfo.setUnusedFlagCount(this.unusedFlagCount);
+        char[] tileInfo = new char[boardWidth*boardHeight];
+        for (int i = 0; i < boardHeight; i++) {
+            for (int j = 0; j < boardWidth; j++) {
+                tileInfo[i*boardWidth + j] = tiles[i][j].toChar();
+            }
+        }
+        gameInfo.setBoard(tileInfo);
+    }
+
+    @Override
+    public synchronized void setGameState(GameInfo gameInfo) {
+        init();
+        this.unopened_tile_count = gameInfo.getUnopenedTileCount();
+        this.unusedFlagCount = gameInfo.getUnusedFlagCount();
+
+        String tileInfo = gameInfo.getBoard();
+        for (int i = 0; i < boardHeight; i++) {
+            for (int j = 0; j < boardWidth; j++) {
+                tiles[i][j].setTile(tileInfo.charAt(i*boardWidth + j));
+            }
+        }
     }
 
     class Point {

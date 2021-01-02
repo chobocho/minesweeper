@@ -38,6 +38,16 @@ public class BoardProfile {
     private int flag_count_button_width = 0;
     private int flag_count_button_height = 0;
 
+    private int new_game_button_startX = 0;
+    private int new_game_button_startY = 0;
+    private int new_game_button_width = 0;
+    private int new_game_button_height = 0;
+
+    private int resume_button_startX = 0;
+    private int resume_button_startY = 0;
+    private int resume_button_width = 0;
+    private int resume_button_height = 0;
+
     String version ="";
 
     public BoardProfile(String version, int width, int height) {
@@ -61,6 +71,8 @@ public class BoardProfile {
         init_smile_button();
         init_playtime_button();
         init_flag_button();
+        init_new_game_button();
+        init_resume_button();
     }
 
     public int tileStartX() { return mTileStartX; }
@@ -160,6 +172,52 @@ public class BoardProfile {
 
     public int flagCountBtnHeight() {
         return flag_count_button_height;
+    }
+
+    public void init_new_game_button() {
+        new_game_button_startX = startX() + blockSize() * 3;
+        new_game_button_startY = startY() + blockSize() * 7;
+        new_game_button_width = blockSize()*4;
+        new_game_button_height = blockSize();
+    }
+
+    public int newGameButtonStartX() {
+        return new_game_button_startX;
+    }
+
+    public int newGameButtonStartY() {
+        return new_game_button_startY;
+    }
+
+    public int newGameButtonWidth() {
+        return new_game_button_width;
+    }
+
+    public int newGameButtonHeight() {
+        return new_game_button_height;
+    }
+
+    public void init_resume_button() {
+        resume_button_startX = startX() + blockSize() * 3;
+        resume_button_startY = startY() + blockSize() * 4;
+        resume_button_width = blockSize()*4;
+        resume_button_height = blockSize();
+    }
+
+    public int resumeButtonStartX() {
+        return resume_button_startX;
+    }
+
+    public int resumeButtonStartY() {
+        return resume_button_startY;
+    }
+
+    public int resumeButtonWidth() {
+        return resume_button_width;
+    }
+
+    public int resumeButtonHeight() {
+        return resume_button_height;
     }
 
     public void setScreenSize(int w, int h) {

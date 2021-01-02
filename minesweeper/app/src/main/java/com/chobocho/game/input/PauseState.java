@@ -17,5 +17,13 @@ public class PauseState extends State {
             mineSweeper.play();
             return;
         }
+        if (resume_button.in(x, y)) {
+            mineSweeper.play();
+            return;
+        }
+        if (new_game_button.in(x,y)) {
+            mineSweeper.idle();
+            return;
+        }
     }
 }

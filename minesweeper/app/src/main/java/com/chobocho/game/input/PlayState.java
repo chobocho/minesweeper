@@ -29,6 +29,7 @@ public class PlayState extends State {
             int sx = (int)((x - mProfile.tileStartX()) / mProfile.blockSize());
             int sy = (int)((y - mProfile.tileStartY()) / mProfile.blockSize());
             Log.i(TAG, "SX: " + sx + ", SY: " + sy);
+
             if (mineSweeper.getToolType() == MineSweeper.BOOM) {
                 mineSweeper.open(sx, sy);
             } else {

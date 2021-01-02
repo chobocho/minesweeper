@@ -16,6 +16,9 @@ public interface MineSweeper {
 
 
     public void register(GameObserver observer);
+    public GameInfo getGameInfo();
+    public void setGameInfo(GameInfo gameInfo);
+
     public boolean isPlayState();
 
     public void setFlag(int x, int y);

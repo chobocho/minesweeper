@@ -20,6 +20,7 @@ public class MineSweeperView extends View {
     private MineSweeper mineSweeper;
     private UiManager uiManager;
     private InputManager inputManager;
+    private final ViewListener listener = new ViewListener();
 
     private HandlerThread playerHandlerThread;
     private Handler playerHandler;
@@ -35,6 +36,7 @@ public class MineSweeperView extends View {
         this.mContext = context;
         this.mineSweeper = mineSweeper;
         this.uiManager = uiManagerImpl;
+        this.uiManager.setListener(listener);
         this.inputManager = inputManagerImpl;
         createPlayerThread();
         startGame();
@@ -106,6 +108,7 @@ public class MineSweeperView extends View {
             @Override
             public void handleMessage(Message msg) {
                 Log.d(LOG_TAG, "There is event : " + msg.what);
+
                 switch (msg.what) {
                     case PRESS_KEY:
                         inputManager.onTouch(msg.arg1, msg.arg2);
@@ -114,6 +117,9 @@ public class MineSweeperView extends View {
                     case EXPIRED_TIMER:
                         if (mineSweeper != null && mineSweeper.isPlayState()) {
                             mineSweeper.tick();
+                        } else {
+                            // without this code crash happened!
+                            break;
                         }
                         if (playerHandler.hasMessages(EXPIRED_TIMER)) {
                             playerHandler.removeMessages(EXPIRED_TIMER);
@@ -130,5 +136,16 @@ public class MineSweeperView extends View {
                 }
             }
         };
+    }
+
+    public class ViewListener {
+        ViewListener() {
+
+        }
+        public void update() {
+            Message message = new Message();
+            message.what = EXPIRED_TIMER;
+            playerHandler.sendMessage(message);
+        }
     }
 }

@@ -97,7 +97,22 @@ public class BoardImplTest {
     }
 
     @Test
-    public void isFinish() {
+    public void testMemento() {
+        testBoard.init();
+        testBoard.setFlag(10,10);
+        testBoard.setFlag(0, 0);
+        testBoard.setFlag(7, 2);
+        assertEquals(MineSweeper.FLAG, testBoard.getBoard()[0][0]);
+        assertEquals(MineSweeper.FLAG, testBoard.getBoard()[2][7]);
 
+        GameInfo gameInfo = new GameInfo(boardWidth, boardHeight);
+        testBoard.getGameState(gameInfo);
+
+        testBoard.init();
+        assertEquals(MineSweeper.NOT_OPEN, testBoard.getBoard()[0][0]);
+
+        testBoard.setGameState(gameInfo);
+        assertEquals(MineSweeper.FLAG, testBoard.getBoard()[0][0]);
+        assertEquals(MineSweeper.FLAG, testBoard.getBoard()[2][7]);
     }
 }

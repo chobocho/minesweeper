@@ -9,6 +9,8 @@ public class State {
     protected  TileButton[] play_time;
     protected  TileButton flag_button;
     protected  TileButton[] flag_count_button;
+    protected  TileButton new_game_button;
+    protected  TileButton resume_button;
 
     MineSweeper  mineSweeper;
     BoardProfile mProfile;
@@ -48,6 +50,18 @@ public class State {
         for (int i = 0; i < 2; i++) {
             flag_count_button[i] = new TileButton("", 0, flag_count_startX+flag_count_w*i, flag_count_startY, flag_count_w, flag_count_h);
         }
+
+        int new_game_button_startX = profile.newGameButtonStartX();
+        int new_game_button_startY = profile.newGameButtonStartY();
+        int new_game_button_w = profile.newGameButtonWidth();
+        int new_game_button_h = profile.newGameButtonHeight();
+        new_game_button = new TileButton("", 0, new_game_button_startX, new_game_button_startY, new_game_button_w, new_game_button_h);
+
+        int resueme_button_startX = profile.resumeButtonStartX();
+        int resueme_button_startY = profile.resumeButtonStartY();
+        int resueme_button_w = profile.resumeButtonWidth();
+        int resueme_button_h = profile.resumeButtonHeight();
+        resume_button = new TileButton("", 0, resueme_button_startX, resueme_button_startY, resueme_button_w, resueme_button_h);
     }
 
     public void onTouch(int x, int y) {

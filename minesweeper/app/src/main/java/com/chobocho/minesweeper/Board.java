@@ -10,4 +10,7 @@ public interface Board {
     public boolean hasBoom(int x, int y);
     public boolean isFinish();
     public int[][] getBoard();
+
+    public void getGameState(GameInfo gameInfo);
+    public void setGameState(GameInfo gameInfo);
 }

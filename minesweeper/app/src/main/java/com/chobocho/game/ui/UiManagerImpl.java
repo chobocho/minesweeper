@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.os.Vibrator;
 import android.util.Log;
 
 import com.chobocho.game.BoardProfile;
+import com.chobocho.game.MineSweeperView;
 import com.chobocho.game.R;
 import com.chobocho.minesweeper.GameObserver;
 import com.chobocho.minesweeper.MineSweeper;
@@ -16,6 +18,7 @@ public class UiManagerImpl implements UiManager, GameObserver {
     Bitmap[] mTile;
     Context mContext;
     BoardProfile mProfile;
+    MineSweeperView.ViewListener listener;
 
     State uiState;
     State idleState;
@@ -24,6 +27,7 @@ public class UiManagerImpl implements UiManager, GameObserver {
     State winState;
     State gameoverState;
 
+    int VIBRATE_TIMER = 300;
 
     public UiManagerImpl(Context context, BoardProfile profile, MineSweeper mineSweeper) {
         mContext = context;
@@ -32,7 +36,6 @@ public class UiManagerImpl implements UiManager, GameObserver {
         initState(mineSweeper);
         mineSweeper.register(this);
     }
-
 
     private void initState(MineSweeper mineSweeper) {
         idleState = new IdleState(mProfile, mineSweeper, mTile);
@@ -43,12 +46,17 @@ public class UiManagerImpl implements UiManager, GameObserver {
         uiState = idleState;
     }
 
+    @Override
+    public void setListener(MineSweeperView.ViewListener listener) {
+        this.listener = listener;
+    }
+
     private void beforeInitState() {
         loadImage();
     }
 
     private void loadImage() {
-        mTile = new Bitmap[30];
+        mTile = new Bitmap[32];
         mTile[0] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n0);
         mTile[1] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n1);
         mTile[2] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n2);
@@ -69,6 +77,8 @@ public class UiManagerImpl implements UiManager, GameObserver {
         mTile[BOOM_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.boom_face);
         mTile[WIN_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.win_face);
         mTile[PAUSE_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pause_face);
+        mTile[NEW_GAME] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.newgame);
+        mTile[RESUME] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.resume);
         mTile[NUMBER_0] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn0);
         mTile[NUMBER_0+1] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn1);
         mTile[NUMBER_0+2] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn2);
@@ -91,6 +101,7 @@ public class UiManagerImpl implements UiManager, GameObserver {
                 break;
             case GameObserver.PLAY:
                 uiState = playState;
+                listener.update();
                 break;
             case GameObserver.PAUSE:
                 uiState = pauseState;
@@ -100,6 +111,7 @@ public class UiManagerImpl implements UiManager, GameObserver {
                 break;
             case GameObserver.GAME_OVER:
                 uiState = gameoverState;
+                makeVibration();
                 break;
             default:
                 Log.e(TAG,"Error! Unexpected state");
@@ -108,6 +120,10 @@ public class UiManagerImpl implements UiManager, GameObserver {
         }
     }
 
+    private void makeVibration() {
+        Vibrator vibrator = (Vibrator)mContext.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(VIBRATE_TIMER);
+    }
 
     @Override
     public void onDraw(Canvas canvas) {

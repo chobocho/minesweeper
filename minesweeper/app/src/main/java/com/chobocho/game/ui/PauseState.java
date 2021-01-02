@@ -38,5 +38,13 @@ public class PauseState extends State {
                                 j * BLOCK_IMAGE_SIZE + startY + BLOCK_IMAGE_SIZE), paint);
             }
         }
+
+        canvas.drawBitmap(images[UiManager.RESUME], null, resume_button.toRect(), paint);
+        canvas.drawBitmap(images[UiManager.NEW_GAME], null, new_game_button.toRect(), paint);
+
+        int block_size = mProfile.blockSize();
+        paint.setTextSize((int)block_size/3);
+        paint.setColor(Color.BLUE);
+        canvas.drawText("Version: " + this.mProfile.getVersion(), this.mProfile.startX(), block_size * 12 + block_size/3, paint);
     }
 }

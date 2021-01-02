@@ -144,4 +144,44 @@ public class MineSweeperImpl implements MineSweeper, MineSweeperNotifyCallback {
     public int getToolType() {
         return toolType;
     }
+
+    @Override
+    public GameInfo getGameInfo() {
+        GameInfo gameInfo = new GameInfo(this.boardWidth, this.boardHeight);
+
+        if (isPlayState()) {
+            return gameInfo;
+        }
+
+        gameInfo.setGameSate(gameState.getState());
+        gameInfo.setPlayTime(this.play_time);
+        this.board.getGameState(gameInfo);
+        return gameInfo;
+    }
+
+    @Override
+    public void setGameInfo(GameInfo gameInfo) {
+        play_time = gameInfo.getPlayTime();
+        switch (gameInfo.getGameState()) {
+            case GameObserver.IDLE:
+                idle();
+                break;
+            case GameObserver.PLAY:
+                break;
+            case GameObserver.PAUSE:
+                board.setGameState(gameInfo);
+                pause();
+                break;
+            case GameObserver.GAME_OVER:
+                board.setGameState(gameInfo);
+                setGameOverState();
+                break;
+            case GameObserver.WIN:
+                board.setGameState(gameInfo);
+                setWinState();
+                break;
+            default:
+                break;
+        }
+    }
 }

@@ -100,7 +100,7 @@ public class Tile {
         /*
            openState|hasFlag|explode|boom|number(4bit);
         */
-        char result = 0;
+        char result = 0x0;
         result = (char)(number & 0xF);
         result |= openState ? 0x80:0;
         result |= flag ? 0x40:0;

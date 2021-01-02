@@ -16,34 +16,29 @@ android {
         versionInfo['VERSION_CODE'] = 1
         versionInfo['MONTHLY_RELEASE_COUNT'] = 0
         versionInfo['BUILD_COUNT'] = 0
-        versionInfo['TOTAL_BUILD_COUNT'] = 0
     }
 
     def versionHeader = versionInfo['VERSION_HEADER']
     def releaseVersionCode = versionInfo['VERSION_CODE'].toInteger()
     def monthVersionCount = versionInfo['MONTHLY_RELEASE_COUNT'].toInteger()
-    def month_build_count = versionInfo['BUILD_COUNT'].toInteger()
-    def total_build_count = versionInfo['TOTAL_BUILD_COUNT'].toInteger()
+    def build_count = versionInfo['BUILD_COUNT'].toInteger()
 
     def taskName = gradle.startParameter.taskNames
     def addVersion = 1
-    def isReleaseVersion = false
+
 
     if (":app:bundleRelease" in taskName) {
         println '---[bundleRelease]---'
         releaseVersionCode += addVersion
         monthVersionCount += addVersion
-        isReleaseVersion = true
     }
 
-    month_build_count += addVersion
-    total_build_count += addVersion
+    build_count += addVersion
 
     versionInfo['VERSION_HEADER'] = versionHeader.toString()
     versionInfo['VERSION_CODE'] = releaseVersionCode.toString()
     versionInfo['MONTHLY_RELEASE_COUNT'] = monthVersionCount.toString()
-    versionInfo['BUILD_COUNT'] = isReleaseVersion ? "1" : month_build_count.toString()
-    versionInfo['TOTAL_BUILD_COUNT'] = total_build_count.toString()
+    versionInfo['BUILD_COUNT'] = build_count.toString()
 
     versionInfo.store(versionPropsFile.newWriter(), null)
 
@@ -51,19 +46,19 @@ android {
     def alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     def thisYear =  alphabet.charAt(date.getYear() + 1900 - 2001)
     def thisMonth = alphabet.charAt(date.getMonth())
-    def monthVersion = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(monthVersionCount)
+    def monthVersion = "1123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".charAt(monthVersionCount)
 
     println '-------------------'
     println taskName
-    println "${versionHeader}.${thisYear}${thisMonth}${monthVersion}.${month_build_count}.${total_build_count}"
+    println "${versionHeader}.${thisYear}${thisMonth}${monthVersion}.${build_count}"
     println '-------------------'
 
     defaultConfig {
         applicationId "com.chobocho.minesweeper"
-        minSdkVersion 26
+        minSdkVersion 29
         targetSdkVersion 30
         versionCode releaseVersionCode
-        versionName "${versionHeader}.${thisYear}${thisMonth}${monthVersion}.${month_build_count}.${total_build_count}"
+        versionName "${versionHeader}.${thisYear}${thisMonth}${monthVersion}.${build_count}"
         setProperty("archivesBaseName", "minesweeper_$versionName")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
