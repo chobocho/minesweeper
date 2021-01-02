@@ -1,4 +1,4 @@
-package com.chobocho.game.ui;
+package com.chobocho.game.input;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,18 +9,19 @@ import android.graphics.Rect;
 import com.chobocho.game.BoardProfile;
 import com.chobocho.minesweeper.MineSweeper;
 
-public class WinState extends State {
+public class GameOverState extends State {
 
-    public WinState(BoardProfile profile, MineSweeper mineSweeper, Bitmap[] images) {
+    public GameOverState(BoardProfile profile, MineSweeper mineSweeper) {
         super(profile);
         this.mProfile = profile;
         this.mineSweeper = mineSweeper;
-        this.paint = new Paint();
-        this.images = images;
     }
 
-    public void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
-        onDrawSmileButton(UiManager.WIN_FACE, canvas, paint);
+    @Override
+    public void onTouch(int x, int y) {
+        if (smile_button.in(x, y)) {
+            mineSweeper.idle();
+            return;
+        }
     }
 }

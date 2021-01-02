@@ -34,6 +34,10 @@ public class TileTest {
         assertEquals(true, tile.hasFlag());
         assertEquals(0x45, tile.toChar());
 
+        tile.setFlag(false);
+        assertEquals(false, tile.hasFlag());
+        assertEquals(0x5, tile.toChar());
+
         tile.setOpen();
         assertEquals(false, tile.hasFlag());
         assertEquals(5, tile.toInt());
@@ -48,7 +52,7 @@ public class TileTest {
         assertEquals(true, tile.hasBoom());
 
         tile.setFlag(true);
-        assertEquals(false, tile.hasFlag());
+        assertEquals(true, tile.hasFlag());
         assertEquals(true, tile.hasBoom());
 
         tile.setOpen();
@@ -78,5 +82,13 @@ public class TileTest {
         assertEquals(MineSweeper.NOT_OPEN, tile.toInt());
         tile.setOpen();
         assertEquals(3, tile.toInt());
+
+        tile.init();
+        assertEquals(0, tile.toChar());
+        assertEquals(false, tile.isOpen());
+        assertEquals(false, tile.hasBoom());
+        assertEquals(false, tile.isExploded());
+        assertEquals(false, tile.hasFlag());
+        assertEquals(MineSweeper.NOT_OPEN, tile.toInt());
     }
 }

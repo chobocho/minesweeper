@@ -1,4 +1,4 @@
-package com.chobocho.game.ui;
+package com.chobocho.game;
 
 import android.graphics.Rect;
 

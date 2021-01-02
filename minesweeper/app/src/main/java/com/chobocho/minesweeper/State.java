@@ -1,8 +1,6 @@
 package com.chobocho.minesweeper;
 
 public class State {
-    protected int mBoomCount = 0;
-
     public State() {
     }
 
@@ -18,7 +16,4 @@ public class State {
         return -1;
     }
 
-    public int getBoomCount() {
-        return mBoomCount;
-    }
 }

@@ -16,6 +16,7 @@ public class Tile {
         flag = false;
         boom = false;
         explode = false;
+        number = 0;
     }
 
     public boolean isOpen() {
@@ -33,6 +34,10 @@ public class Tile {
 
     public boolean isExploded() {
         return this.explode;
+    }
+
+    public boolean isEmpty() {
+        return (!openState && !this.flag && !this.boom && (number == 0));
     }
 
     public void increaseNeighBoomCount() {
@@ -69,12 +74,11 @@ public class Tile {
     }
 
     public void setFlag(boolean enable) {
-        if (isOpen() || hasBoom()) {
+        if (isOpen()) {
             return;
         }
-        flag = true;
+        flag = enable;
     }
-
 
     public int toInt() {
         if (flag) {

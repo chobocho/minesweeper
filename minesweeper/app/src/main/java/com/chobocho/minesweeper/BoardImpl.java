@@ -1,6 +1,9 @@
 package com.chobocho.minesweeper;
 
+import android.util.Log;
+
 import java.util.Random;
+import java.util.Stack;
 
 public class BoardImpl implements Board {
     private String TAG = "BoardImpl";
@@ -21,7 +24,7 @@ public class BoardImpl implements Board {
         this.boardHeight = boardHeight;
         this.boomCount = boomCount;
         this.unusedFlagCount = boomCount;
-        this.unopened_tile_count = boardWidth * boardWidth;
+        this.unopened_tile_count = boardWidth * boardHeight;
         initvar();
         init();
     }
@@ -41,6 +44,7 @@ public class BoardImpl implements Board {
         initBoard();
         initBoom();
         this.unusedFlagCount = boomCount;
+        this.unopened_tile_count = this.boardWidth * this.boardHeight;
     }
 
     private void initBoard() {
@@ -90,7 +94,7 @@ public class BoardImpl implements Board {
 
     @Override
     public int getUnusedFlagCount() {
-        return 0;
+        return unusedFlagCount;
     }
 
     @Override
@@ -111,11 +115,57 @@ public class BoardImpl implements Board {
 
     @Override
     public void open(int x, int y) {
+        if (tiles[y][x].hasFlag()) {
+            tiles[y][x].setFlag(false);
+            incUnusedFlagCount();
+        }
+        if (tiles[y][x].isEmpty()) {
+            openTiles(x, y);
+            return;
+        }
         if (tiles[y][x].setOpen()) {
             unopened_tile_count--;
         }
-        if (tiles[y][x].hasFlag()) {
-            unusedFlagCount++;
+    }
+
+    private synchronized void openTiles(int x, int y) {
+        Stack<Point> tileList = new Stack<>();
+        tileList.push(new Point(x, y));
+
+        while(!tileList.isEmpty()) {
+            Point p = tileList.pop();
+            if (!tiles[p.y][p.x].isEmpty()) {
+                continue;
+            }
+
+            if (tiles[p.y][p.x].hasFlag()) {
+                incUnusedFlagCount();
+            }
+
+            if (tiles[p.y][p.x].setOpen()) {
+                unopened_tile_count--;
+            }
+
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (((p.x+i) < 0) || ((p.y+j) < 0) || ((p.x+i) >= boardWidth) || ((p.y+j) >= boardHeight)) {
+                        continue;
+                    }
+                    int nx = p.x+i;
+                    int ny = p.y+j;
+                    if (tiles[ny][nx].isEmpty()) {
+                        tileList.push(new Point(nx, ny));
+                    }
+                    else if (!tiles[ny][nx].isOpen() && !tiles[ny][nx].hasBoom()) {
+                        if (tiles[ny][nx].hasFlag()) {
+                            incUnusedFlagCount();
+                        }
+                        if (tiles[ny][nx].setOpen()) {
+                            unopened_tile_count--;
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -131,15 +181,43 @@ public class BoardImpl implements Board {
         }
         if (tiles[y][x].hasFlag()) {
             tiles[y][x].setFlag(false);
-            unusedFlagCount++;
+            incUnusedFlagCount();
         } else {
+            if (unusedFlagCount <= 0) {
+                return;
+            }
             tiles[y][x].setFlag(true);
-            unusedFlagCount--;
+            decUnusedFlagCount();
         }
+    }
+
+    private void decUnusedFlagCount() {
+        if (unusedFlagCount <= 0) {
+            return;
+        }
+        unusedFlagCount--;
+    }
+
+    private void incUnusedFlagCount() {
+        if (unusedFlagCount >= boomCount) {
+            return;
+        }
+        unusedFlagCount++;
     }
 
     @Override
     public boolean isFinish() {
+        Log.d(TAG, "unopened_tile_count: " + unopened_tile_count + " boomCount: " + boomCount);
         return unopened_tile_count == boomCount;
+    }
+
+    class Point {
+        public int x;
+        public int y;
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
     }
 }

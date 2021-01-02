@@ -7,9 +7,12 @@ public interface UiManager {
     int QUESTION = 13;
     int COVER = 14;
 
-    int SMILE_FACE = 15;
-    int BOOM_FACE = 16;
-    int WIN_FACE = 17;
-    int NUMBER_0 = 18;
+    int IDLE_FACE = 15;
+    int SMILE_FACE = 16;
+    int BOOM_FACE = 17;
+    int WIN_FACE = 18;
+    int PAUSE_FACE = 19;
+
+    int NUMBER_0 = 20;
     public void onDraw(Canvas canvas);
 }

@@ -37,9 +37,9 @@ public class UiManagerImpl implements UiManager, GameObserver {
     private void initState(MineSweeper mineSweeper) {
         idleState = new IdleState(mProfile, mineSweeper, mTile);
         playState = new PlayState(mProfile, mineSweeper, mTile);
-        pauseState = new PauseState(mProfile, mTile);
-        winState = new WinState(mProfile, mTile);
-        gameoverState = new GameOverState(mProfile, mTile);
+        pauseState = new PauseState(mProfile, mineSweeper, mTile);
+        winState = new WinState(mProfile, mineSweeper, mTile);
+        gameoverState = new GameOverState(mProfile, mineSweeper, mTile);
         uiState = idleState;
     }
 
@@ -48,7 +48,7 @@ public class UiManagerImpl implements UiManager, GameObserver {
     }
 
     private void loadImage() {
-        mTile = new Bitmap[28];
+        mTile = new Bitmap[30];
         mTile[0] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n0);
         mTile[1] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n1);
         mTile[2] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n2);
@@ -64,19 +64,21 @@ public class UiManagerImpl implements UiManager, GameObserver {
         mTile[FLAG] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.flag);
         mTile[QUESTION] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.question);
         mTile[COVER] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.cover);
-        mTile[SMILE_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.smile_face);
+        mTile[IDLE_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.idle_face);
+        mTile[SMILE_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.play_face);
         mTile[BOOM_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.boom_face);
         mTile[WIN_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.win_face);
+        mTile[PAUSE_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pause_face);
         mTile[NUMBER_0] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn0);
-        mTile[19] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn1);
-        mTile[20] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn2);
-        mTile[21] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn3);
-        mTile[22] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn4);
-        mTile[23] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn5);
-        mTile[24] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn6);
-        mTile[25] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn7);
-        mTile[26] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn8);
-        mTile[27] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn9);
+        mTile[NUMBER_0+1] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn1);
+        mTile[NUMBER_0+2] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn2);
+        mTile[NUMBER_0+3] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn3);
+        mTile[NUMBER_0+4] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn4);
+        mTile[NUMBER_0+5] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn5);
+        mTile[NUMBER_0+6] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn6);
+        mTile[NUMBER_0+7] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn7);
+        mTile[NUMBER_0+8] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn8);
+        mTile[NUMBER_0+9] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn9);
     }
 
 

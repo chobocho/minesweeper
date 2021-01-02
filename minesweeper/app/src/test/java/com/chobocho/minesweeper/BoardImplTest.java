@@ -71,7 +71,6 @@ public class BoardImplTest {
             //System.out.println(p%boardWidth +" , " + p/boardWidth);
             assertEquals(true, testBoard.isOpen(p%boardWidth, p/boardWidth));
         });
-        assertEquals(2, open_block_count);
     }
 
     @Test

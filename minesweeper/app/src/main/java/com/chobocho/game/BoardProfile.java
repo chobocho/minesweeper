@@ -12,6 +12,9 @@ public class BoardProfile {
     private int mStartX = 0;
     private int mStartY = 0;
 
+    private int mTileStartX = 0;
+    private int mTileStartY = 0;
+
     private int mBoardWidth = 0;
     private int mBoardHeight = 0;
 
@@ -52,11 +55,16 @@ public class BoardProfile {
         mStartX = (int)((screenW - mblockSize*10)/2);
         mStartY = 0;
 
+        mTileStartX = mStartX;
+        mTileStartY = mStartY + 2 * blockSize();
 
         init_smile_button();
         init_playtime_button();
         init_flag_button();
     }
+
+    public int tileStartX() { return mTileStartX; }
+    public int tileStartY() { return mTileStartY; }
 
     private void get_block_size() {
         int block_width = (int) (screenW / 10);

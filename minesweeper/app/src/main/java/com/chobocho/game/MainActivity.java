@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
 
+import com.chobocho.game.input.InputManager;
+import com.chobocho.game.input.InputManagerImpl;
 import com.chobocho.game.ui.UiManager;
 import com.chobocho.game.ui.UiManagerImpl;
 import com.chobocho.minesweeper.MineSweeper;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     MineSweeper mineSweeper;
     MineSweeperView gameView;
     UiManager uiManager;
+    InputManager inputManger;
 
 
     @Override
@@ -37,9 +40,10 @@ public class MainActivity extends AppCompatActivity {
         int height = size.y;
 
         BoardProfile boardProfile = new BoardProfile(version, width, height);
-        mineSweeper = new MineSweeperImpl(10, 10, 19);
+        mineSweeper = new MineSweeperImpl(10, 10, 12);
         uiManager = new UiManagerImpl(this, boardProfile, mineSweeper);
-        gameView = new MineSweeperView(this, uiManager);
+        inputManger = new InputManagerImpl(boardProfile, mineSweeper);
+        gameView = new MineSweeperView(this, mineSweeper, uiManager, inputManger);
     }
 
     private String getVersion() {

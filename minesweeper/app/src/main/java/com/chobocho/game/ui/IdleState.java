@@ -21,6 +21,6 @@ public class IdleState extends State {
 
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        onDrawSmileButton(UiManager.SMILE_FACE, canvas, paint);
+        onDrawSmileButton(UiManager.IDLE_FACE, canvas, paint);
     }
 }

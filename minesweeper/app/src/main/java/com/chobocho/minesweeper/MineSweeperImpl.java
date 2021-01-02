@@ -8,6 +8,7 @@ public class MineSweeperImpl implements MineSweeper, MineSweeperNotifyCallback {
     private int boardHeight;
     private int boomCount;
     private int play_time = 0;
+    private int toolType = 0;
 
     Board board;
     State gameState;
@@ -41,8 +42,10 @@ public class MineSweeperImpl implements MineSweeper, MineSweeperNotifyCallback {
         pauseState = new PauseState();
         gameOverState = new GameOverState();
         winState = new WinState();
-
         gameState = idleState;
+
+        play_time = 0;
+        toolType = MineSweeper.FLAG;
     }
 
     private void initGame() {
@@ -74,6 +77,10 @@ public class MineSweeperImpl implements MineSweeper, MineSweeperNotifyCallback {
     @Override
     public void tick() {
         play_time++;
+        if (play_time >= 5999) {
+            play_time = 5999;
+            setGameOverState();
+        }
     }
 
     @Override
@@ -93,7 +100,7 @@ public class MineSweeperImpl implements MineSweeper, MineSweeperNotifyCallback {
     }
 
     public void pause() {
-        gameState = playState;
+        gameState = pauseState;
         Notify();
     }
 
@@ -111,11 +118,30 @@ public class MineSweeperImpl implements MineSweeper, MineSweeperNotifyCallback {
 
     @Override
     public int getUnusedFlagCount() {
-        return gameState.getBoomCount();
+        return board.getUnusedFlagCount();
     }
 
     @Override
     public int[][] getBoard() {
         return board.getBoard();
+    }
+
+    @Override
+    public boolean isPlayState() {
+        return gameState == playState;
+    }
+
+    @Override
+    public void toggleTool() {
+        if (toolType == MineSweeper.FLAG) {
+            toolType = MineSweeper.BOOM;
+        } else {
+            toolType = MineSweeper.FLAG;
+        }
+    }
+
+    @Override
+    public int getToolType() {
+        return toolType;
     }
 }

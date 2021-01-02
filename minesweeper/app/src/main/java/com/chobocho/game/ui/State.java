@@ -7,11 +7,12 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.chobocho.game.BoardProfile;
+import com.chobocho.game.TileButton;
 import com.chobocho.minesweeper.MineSweeper;
 
 public class State {
     protected  Bitmap[] images;
-    protected  TileButton smile_button;
+    protected TileButton smile_button;
     protected  TileButton[] play_time;
     protected  TileButton flag_button;
     protected  TileButton[] flag_count_button;
@@ -62,7 +63,7 @@ public class State {
         canvas.drawRect(new Rect(0, 0, mProfile.screenWidth(), mProfile.screenHeight()), paint);
 
         onDrawTimer(mineSweeper.getPlaytime(), canvas, paint);
-        onDrawFlagButton(UiManager.FLAG, canvas, paint);
+        onDrawFlagButton(mineSweeper.getToolType(), canvas, paint);
         onDrawFlagCountButton(mineSweeper.getUnusedFlagCount(), canvas, paint);
 
         int BLOCK_IMAGE_SIZE = mProfile.blockSize();
@@ -72,7 +73,6 @@ public class State {
         int boardH = mProfile.boardHeight();
 
         int board[][] = mineSweeper.getBoard();
-
         for (int i = 0; i < boardW; i++) {
             for (int j = 0; j < boardH; j++) {
                 int imageNumber = getImageNumber(board, i, j);

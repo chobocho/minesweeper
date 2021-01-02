@@ -16,6 +16,7 @@ public interface MineSweeper {
 
 
     public void register(GameObserver observer);
+    public boolean isPlayState();
 
     public void setFlag(int x, int y);
     public int getUnusedFlagCount();
@@ -27,6 +28,9 @@ public interface MineSweeper {
     public void play();
     public void pause();
     public void idle();
+
+    public void toggleTool();
+    public int getToolType();
 
     public int[][] getBoard();
 }
