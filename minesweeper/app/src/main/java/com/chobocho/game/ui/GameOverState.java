@@ -14,6 +14,7 @@ public class GameOverState extends State {
     Paint paint;
 
     public GameOverState(BoardProfile profile, Bitmap[] images) {
+        super(profile);
         this.mProfile = profile;
         this.paint = new Paint();
         this.images = images;

@@ -14,6 +14,7 @@ public class PauseState extends State {
     Paint paint;
 
     public PauseState(BoardProfile profile, Bitmap[] images) {
+        super(profile);
         this.mProfile = profile;
         this.paint = new Paint();
         this.images = images;

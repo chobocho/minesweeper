@@ -14,6 +14,7 @@ public class WinState extends State {
     Paint paint;
 
     public WinState(BoardProfile profile, Bitmap[] images) {
+        super(profile);
         this.mProfile = profile;
         this.paint = new Paint();
         this.images = images;
