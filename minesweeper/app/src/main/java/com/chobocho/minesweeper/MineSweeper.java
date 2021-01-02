@@ -14,34 +14,19 @@ public interface MineSweeper {
     final int QUESTION = 13;
     final int NOT_OPEN = 14;
 
-    /**
-     * 
-     */
+
     public void register(GameObserver observer);
 
-    /**
-     * 
-     */
-    public void touch(int x, int y);
+    public void setFlag(int x, int y);
+    public int getUnusedFlagCount();
+    public void open(int x, int y);
 
-    /**
-     * 
-     */
     public void tick();
+    public int getPlaytime();
 
-    /**
-     * 
-     */
     public void play();
-
-    /**
-     * 
-     */
     public void pause();
-
     public void idle();
-
-    public int getBoomCount();
 
     public int[][] getBoard();
 }

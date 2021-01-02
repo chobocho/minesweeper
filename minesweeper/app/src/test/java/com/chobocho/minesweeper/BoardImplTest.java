@@ -92,7 +92,7 @@ public class BoardImplTest {
 
         point.stream().forEach( p -> {
             //System.out.println(p%boardWidth +" , " + p/boardWidth);
-            assertEquals(true, testBoard.isBoom(p%boardWidth, p/boardWidth));
+            assertEquals(true, testBoard.hasBoom(p%boardWidth, p/boardWidth));
         });
 
     }

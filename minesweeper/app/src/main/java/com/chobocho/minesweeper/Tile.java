@@ -2,8 +2,7 @@ package com.chobocho.minesweeper;
 
 public class Tile {
     private boolean openState;
-    private boolean hasFlag;
-    private boolean hasQuestion;
+    private boolean flag;
     private boolean boom;
     private boolean explode;
     private int number = 0;
@@ -14,8 +13,7 @@ public class Tile {
 
     public void init() {
         openState = false;
-        hasFlag = false;
-        hasQuestion = false;
+        flag = false;
         boom = false;
         explode = false;
     }
@@ -29,24 +27,24 @@ public class Tile {
         number = 0;
     }
 
-    public boolean isBoom() {
+    public boolean hasBoom() {
         return this.boom;
     }
 
     public boolean isExploded() {
-        return this.explode = true;
+        return this.explode;
     }
 
     public void increaseNeighBoomCount() {
-        if (this.boom) {
+        if (hasBoom()) {
             return;
         }
         this.number++;
     }
 
-    public void setOpen() {
+    public boolean setOpen() {
         if (openState) {
-            return;
+            return false;
         }
 
         if (this.boom) {
@@ -54,47 +52,36 @@ public class Tile {
         }
 
         openState = true;
-        hasFlag = false;
-        hasQuestion = false;
+        flag = false;
+
+        return true;
     }
 
-    public void setNothing() {
+    public void setClear() {
         if (openState) {
             return;
         }
-        hasFlag = false;
-        hasQuestion = false;
+        flag = false;
     }
 
-    public boolean haveFlag() {
-        return hasFlag;
+    public boolean hasFlag() {
+        return flag;
     }
 
     public void setFlag(boolean enable) {
-        if (openState) {
+        if (isOpen() || hasBoom()) {
             return;
         }
-        hasFlag = true;
-        hasQuestion = false;
+        flag = true;
     }
 
-    public void setQuestion(boolean enable) {
-        if (openState) {
-            return;
-        }
-        hasQuestion = true;
-        hasFlag = false;
-    }
 
     public int toInt() {
-        if (!openState) {
-            return MineSweeper.NOT_OPEN;
-        }
-        if (hasFlag) {
+        if (flag) {
             return MineSweeper.FLAG;
         }
-        if (hasQuestion) {
-            return MineSweeper.QUESTION;
+        if (!openState) {
+            return MineSweeper.NOT_OPEN;
         }
         if (explode) {
             return MineSweeper.CRASH;
@@ -103,5 +90,27 @@ public class Tile {
             return MineSweeper.BOOM;
         }
         return this.number;
+    }
+
+    public char toChar() {
+        /*
+           openState|hasFlag|explode|boom|number(4bit);
+        */
+        char result = 0;
+        result = (char)(number & 0xF);
+        result |= openState ? 0x80:0;
+        result |= flag ? 0x40:0;
+        result |= explode ? 0x20:0;
+        result |= boom ? 0x10:0;
+        return result;
+    }
+
+    public void setTile(char ch) {
+        init();
+        number = ch & 0xF;
+        boom = (ch & 0x10) > 0;
+        explode = (ch & 0x20) > 0;
+        flag = (ch & 0x40) > 0;
+        openState = (ch & 0x80) > 0;
     }
 }

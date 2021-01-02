@@ -6,7 +6,11 @@ public class State {
     public State() {
     }
 
-    public void touch(int x, int y) {
+    public void setFlag(int x, int y) {
+
+    }
+
+    public void open(int x, int y) {
 
     }
 

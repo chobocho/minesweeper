@@ -1,9 +1,12 @@
 package com.chobocho.minesweeper;
 
 public class PlayState extends State {
+    Board board;
+    MineSweeperNotifyCallback minesweeper;
 
-    public PlayState(int boomCount) {
-        mBoomCount = boomCount;
+    public PlayState(MineSweeperNotifyCallback mineSweper, Board board) {
+        this.minesweeper = mineSweper;
+        this.board = board;
     }
 
     public int getState() {
@@ -11,7 +14,17 @@ public class PlayState extends State {
     }
 
     @Override
-    public void touch(int x, int y) {
+    public void open(int x, int y) {
+        this.board.open(x, y);
+        if (board.isFinish()) {
+            minesweeper.setWinState();
+        } else if (board.hasBoom(x, y)) {
+            minesweeper.setGameOverState();
+        }
+    }
 
+    @Override
+    public void setFlag(int x, int y) {
+        this.board.setFlag(x, y);
     }
 }

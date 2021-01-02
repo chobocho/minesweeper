@@ -2,11 +2,12 @@ package com.chobocho.minesweeper;
 
 import java.util.ArrayList;
 
-public class MineSweeperImpl implements MineSweeper {
+public class MineSweeperImpl implements MineSweeper, MineSweeperNotifyCallback {
     private ArrayList<GameObserver> observers;
     private int boardWidth;
     private int boardHeight;
     private int boomCount;
+    private int play_time = 0;
 
     Board board;
     State gameState;
@@ -36,12 +37,17 @@ public class MineSweeperImpl implements MineSweeper {
         board = new BoardImpl(boardWidth, boardHeight, boomCount);
 
         idleState = new IdleState();
-        playState = new PlayState(boomCount);
+        playState = new PlayState(this, board);
         pauseState = new PauseState();
         gameOverState = new GameOverState();
         winState = new WinState();
 
         gameState = idleState;
+    }
+
+    private void initGame() {
+        play_time = 0;
+        board.init();
     }
 
     public void register(GameObserver gameObserver) {
@@ -55,16 +61,29 @@ public class MineSweeperImpl implements MineSweeper {
         }
     }
 
-    public void touch(int x, int y) {
-        gameState.touch(x, y);
+    @Override
+    public void open(int x, int y) {
+        gameState.open(x, y);
     }
 
+    @Override
+    public void setFlag(int x, int y) {
+        gameState.setFlag(x, y);
+    }
+
+    @Override
     public void tick() {
-        // TODO implement here
+        play_time++;
+    }
+
+    @Override
+    public int getPlaytime() {
+        return play_time;
     }
 
     public void idle() {
         gameState = idleState;
+        initGame();
         Notify();
     }
 
@@ -79,7 +98,19 @@ public class MineSweeperImpl implements MineSweeper {
     }
 
     @Override
-    public int getBoomCount() {
+    public void setWinState() {
+        gameState = winState;
+        Notify();
+    }
+
+    @Override
+    public void setGameOverState() {
+        gameState = gameOverState;
+        Notify();
+    }
+
+    @Override
+    public int getUnusedFlagCount() {
         return gameState.getBoomCount();
     }
 

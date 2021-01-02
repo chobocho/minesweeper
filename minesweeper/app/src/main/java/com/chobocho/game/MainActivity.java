@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         int height = size.y;
 
         BoardProfile boardProfile = new BoardProfile(version, width, height);
-        mineSweeper = new MineSweeperImpl(10, 10, 10);
+        mineSweeper = new MineSweeperImpl(10, 10, 19);
         uiManager = new UiManagerImpl(this, boardProfile, mineSweeper);
         gameView = new MineSweeperView(this, uiManager);
     }

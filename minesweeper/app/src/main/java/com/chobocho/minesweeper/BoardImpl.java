@@ -7,8 +7,8 @@ public class BoardImpl implements Board {
     private int boardWidth = 10;
     private int boardHeight = 10;
     private int boomCount = 10;
-    private int foundBoomCount = 0;
-    private int flagCount = 0;
+    private int unopened_tile_count = 0;
+    private int unusedFlagCount = 0;
     private int[][] board;
     private Tile[][] tiles;
 
@@ -20,6 +20,8 @@ public class BoardImpl implements Board {
         this.boardWidth = boardWidth;
         this.boardHeight = boardHeight;
         this.boomCount = boomCount;
+        this.unusedFlagCount = boomCount;
+        this.unopened_tile_count = boardWidth * boardWidth;
         initvar();
         init();
     }
@@ -38,6 +40,7 @@ public class BoardImpl implements Board {
     public void init() {
         initBoard();
         initBoom();
+        this.unusedFlagCount = boomCount;
     }
 
     private void initBoard() {
@@ -58,7 +61,7 @@ public class BoardImpl implements Board {
             int x = rand.nextInt(boardWidth);
             int y = rand.nextInt(boardHeight);
 
-            if (!tiles[y][x].isBoom()) {
+            if (!tiles[y][x].hasBoom()) {
                 tiles[y][x].setBoom();
                 updateBoomInfo(x, y);
                 count--;
@@ -86,7 +89,7 @@ public class BoardImpl implements Board {
     }
 
     @Override
-    public int getFlagCount() {
+    public int getUnusedFlagCount() {
         return 0;
     }
 
@@ -108,57 +111,35 @@ public class BoardImpl implements Board {
 
     @Override
     public void open(int x, int y) {
-        tiles[y][x].setOpen();
+        if (tiles[y][x].setOpen()) {
+            unopened_tile_count--;
+        }
+        if (tiles[y][x].hasFlag()) {
+            unusedFlagCount++;
+        }
     }
 
     @Override
-    public boolean isBoom(int x, int y) {
-        return tiles[y][x].isBoom();
+    public boolean hasBoom(int x, int y) {
+        return tiles[y][x].hasBoom();
     }
 
     @Override
     public void setFlag(int x, int y) {
-        if (tiles[y][x].haveFlag()) {
+        if (tiles[y][x].isOpen()) {
             return;
         }
-        tiles[y][x].setFlag(true);
-        flagCount++;
-        inc_boom_count(x, y);
-    }
-
-    private void inc_boom_count(int x, int y) {
-        if (tiles[y][x].isBoom()) {
-            foundBoomCount++;
+        if (tiles[y][x].hasFlag()) {
+            tiles[y][x].setFlag(false);
+            unusedFlagCount++;
+        } else {
+            tiles[y][x].setFlag(true);
+            unusedFlagCount--;
         }
-    }
-
-    private void dec_boom_count(int x, int y) {
-        if (tiles[y][x].isBoom()) {
-            foundBoomCount--;
-        }
-    }
-
-    @Override
-    public void setQuestion(int x, int y) {
-        if (tiles[y][x].haveFlag()) {
-            dec_boom_count(x, y);
-            flagCount--;
-        }
-        tiles[y][x].setQuestion(true);
-    }
-
-
-    @Override
-    public void clearTile(int x, int y) {
-        if (tiles[y][x].haveFlag()) {
-            dec_boom_count(x, y);
-            flagCount--;
-        }
-        tiles[y][x].setNothing();
     }
 
     @Override
     public boolean isFinish() {
-        return foundBoomCount == boomCount;
+        return unopened_tile_count == boomCount;
     }
 }
