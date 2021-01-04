@@ -23,47 +23,51 @@ public class TileTest {
         char flag = 0x45;
         tile.setTile(flag);
 
-        assertEquals(true, tile.hasFlag());
+        assertTrue(tile.hasFlag());
 
         tile.setClear();
-        assertEquals(false, tile.hasFlag());
+        assertFalse(tile.hasFlag());
         assertEquals(MineSweeper.NOT_OPEN, tile.toInt());
         assertEquals(5, tile.toChar());
 
         tile.setFlag(true);
-        assertEquals(true, tile.hasFlag());
+        assertTrue(tile.hasFlag());
         assertEquals(0x45, tile.toChar());
 
         tile.setFlag(false);
-        assertEquals(false, tile.hasFlag());
+        assertFalse(tile.hasFlag());
         assertEquals(0x5, tile.toChar());
 
         tile.setOpen();
-        assertEquals(false, tile.hasFlag());
+        assertFalse(tile.hasFlag());
         assertEquals(5, tile.toInt());
         assertEquals(0x85, tile.toChar());
     }
 
     @Test
-    public void boomTest() {
+    public void boomTileTest() {
         char boom = 0x10;
         tile.setTile(boom);
-        assertEquals(false, tile.hasFlag());
-        assertEquals(true, tile.hasBoom());
+        assertFalse(tile.hasFlag());
+        assertTrue(tile.hasBoom());
 
         tile.setFlag(true);
-        assertEquals(true, tile.hasFlag());
-        assertEquals(true, tile.hasBoom());
+        assertTrue(tile.hasFlag());
+        assertTrue(tile.hasBoom());
 
         tile.setOpen();
-        assertEquals(true, tile.hasBoom());
-        assertEquals(true, tile.isExploded());
+        assertTrue(tile.hasBoom());
+        assertTrue(tile.isExploded());
 
         tile.init();
-        assertEquals(false, tile.isOpen());
-        assertEquals(false, tile.hasBoom());
-        assertEquals(false, tile.isExploded());
-        assertEquals(false, tile.hasFlag());
+        assertFalse(tile.isOpen());
+        assertFalse(tile.hasBoom());
+        assertFalse(tile.isExploded());
+        assertFalse(tile.hasFlag());
+        assertEquals(MineSweeper.NOT_OPEN, tile.toInt());
+
+        tile.setOpen();
+        assertEquals(0, tile.toInt());
     }
 
     @Test

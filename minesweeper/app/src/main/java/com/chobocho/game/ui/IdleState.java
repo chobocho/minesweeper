@@ -22,5 +22,6 @@ public class IdleState extends State {
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         onDrawSmileButton(UiManager.IDLE_FACE, canvas, paint);
+        canvas.drawBitmap(images[UiManager.START_GAME], null, start_game_button.toRect(), paint);
     }
 }

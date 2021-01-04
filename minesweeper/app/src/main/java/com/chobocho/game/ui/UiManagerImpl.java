@@ -56,7 +56,7 @@ public class UiManagerImpl implements UiManager, GameObserver {
     }
 
     private void loadImage() {
-        mTile = new Bitmap[32];
+        mTile = new Bitmap[NUMBER_0+10];
         mTile[0] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n0);
         mTile[1] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n1);
         mTile[2] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.n2);
@@ -72,13 +72,17 @@ public class UiManagerImpl implements UiManager, GameObserver {
         mTile[FLAG] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.flag);
         mTile[QUESTION] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.question);
         mTile[COVER] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.cover);
+
         mTile[IDLE_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.idle_face);
         mTile[SMILE_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.play_face);
         mTile[BOOM_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.boom_face);
         mTile[WIN_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.win_face);
         mTile[PAUSE_FACE] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.pause_face);
+
         mTile[NEW_GAME] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.newgame);
         mTile[RESUME] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.resume);
+        mTile[START_GAME] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.start);
+
         mTile[NUMBER_0] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn0);
         mTile[NUMBER_0+1] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn1);
         mTile[NUMBER_0+2] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn2);

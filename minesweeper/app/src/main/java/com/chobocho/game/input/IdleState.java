@@ -13,8 +13,9 @@ public class IdleState extends State {
 
     @Override
     public void onTouch(int x, int y) {
-        if (smile_button.in(x, y)) {
+        if (smile_button.in(x, y) || start_game_button.in(x,y)) {
             mineSweeper.play();
+            return;
         }
     }
 }

@@ -3,7 +3,7 @@ package com.chobocho.game;
 import android.graphics.Rect;
 
 public class TileButton {
-    String name = "";
+    String name;
     int code = 0;
     int startX = 0;
     int startY = 0;

@@ -31,11 +31,13 @@ public class PauseState extends State {
 
         for (int i = 0; i < boardW; i++) {
             for (int j = 0; j < boardH; j++) {
-                canvas.drawBitmap(images[UiManager.COVER], null,
-                        new Rect(i * BLOCK_IMAGE_SIZE + startX,
-                                j * BLOCK_IMAGE_SIZE + startY,
-                                i * BLOCK_IMAGE_SIZE + startX + BLOCK_IMAGE_SIZE,
-                                j * BLOCK_IMAGE_SIZE + startY + BLOCK_IMAGE_SIZE), paint);
+
+                Rect rect = new Rect(i * BLOCK_IMAGE_SIZE + startX,
+                        j * BLOCK_IMAGE_SIZE + startY,
+                        i * BLOCK_IMAGE_SIZE + startX + BLOCK_IMAGE_SIZE,
+                        j * BLOCK_IMAGE_SIZE + startY + BLOCK_IMAGE_SIZE);
+
+                canvas.drawBitmap(images[UiManager.COVER], null, rect, paint);
             }
         }
 
@@ -43,7 +45,7 @@ public class PauseState extends State {
         canvas.drawBitmap(images[UiManager.NEW_GAME], null, new_game_button.toRect(), paint);
 
         int block_size = mProfile.blockSize();
-        paint.setTextSize((int)block_size/3);
+        paint.setTextSize(block_size/3);
         paint.setColor(Color.BLUE);
         canvas.drawText("Version: " + this.mProfile.getVersion(), this.mProfile.startX(), block_size * 12 + block_size/3, paint);
     }

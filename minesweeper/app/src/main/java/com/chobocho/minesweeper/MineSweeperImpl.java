@@ -167,6 +167,7 @@ public class MineSweeperImpl implements MineSweeper, MineSweeperNotifyCallback {
                 idle();
                 break;
             case GameObserver.PLAY:
+                // Nothing to do
                 break;
             case GameObserver.PAUSE:
                 board.setGameState(gameInfo);

@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.Stack;
 
 public class BoardImpl implements Board {
-    private String TAG = "BoardImpl";
     private int boardWidth = 10;
     private int boardHeight = 10;
     private int boomCount = 10;
@@ -69,9 +68,8 @@ public class BoardImpl implements Board {
                 tiles[y][x].setBoom();
                 updateBoomInfo(x, y);
                 count--;
-            } else {
-                //Log.d(TAG,  "X: "+ x + ",Y: " + y);
             }
+
             max_count--;
 
             if (max_count < 0) {
@@ -226,6 +224,7 @@ public class BoardImpl implements Board {
 
     @Override
     public boolean isFinish() {
+        String TAG = "BoardImpl";
         Log.d(TAG, "unopened_tile_count: " + unopened_tile_count + " boomCount: " + boomCount);
         return unopened_tile_count == boomCount;
     }
