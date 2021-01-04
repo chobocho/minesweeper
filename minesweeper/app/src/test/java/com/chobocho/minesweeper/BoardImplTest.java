@@ -69,7 +69,7 @@ public class BoardImplTest {
 
         opened_points.stream().forEach( p -> {
             //System.out.println(p%boardWidth +" , " + p/boardWidth);
-            assertEquals(true, testBoard.isOpen(p%boardWidth, p/boardWidth));
+            assertTrue(testBoard.isOpen(p % boardWidth, p / boardWidth));
         });
     }
 
@@ -91,7 +91,7 @@ public class BoardImplTest {
 
         point.stream().forEach( p -> {
             //System.out.println(p%boardWidth +" , " + p/boardWidth);
-            assertEquals(true, testBoard.hasBoom(p%boardWidth, p/boardWidth));
+            assertTrue(testBoard.hasBoom(p % boardWidth, p / boardWidth));
         });
 
     }

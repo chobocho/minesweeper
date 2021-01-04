@@ -26,7 +26,7 @@ public class BoardProfile {
     private int smile_button_startX = 0;
     private int smile_button_startY = 0;
     private int smile_button_width = 0;
-    private int smeil_button_height = 0;
+    private int smile_button_height = 0;
 
     private int flag_button_startX = 0;
     private int flag_button_startY = 0;
@@ -48,7 +48,7 @@ public class BoardProfile {
     private int resume_button_width = 0;
     private int resume_button_height = 0;
 
-    String version ="";
+    String version;
 
     public BoardProfile(String version, int width, int height) {
         this.version = version;
@@ -88,7 +88,7 @@ public class BoardProfile {
         smile_button_startX = mStartX + blockSize()*4;
         smile_button_startY = mStartY;
         smile_button_width = blockSize() * 2;
-        smeil_button_height = blockSize() * 2;
+        smile_button_height = blockSize() * 2;
     }
 
     public int smileBtnStartX() {
@@ -104,7 +104,7 @@ public class BoardProfile {
     }
 
     public int smileBtnHeight() {
-        return smeil_button_height;
+        return smile_button_height;
     }
 
     private void init_playtime_button() {

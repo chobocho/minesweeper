@@ -16,7 +16,8 @@ public interface UiManager {
     int PAUSE_FACE = 19;
     int NEW_GAME = 20;
     int RESUME = 21;
-    int NUMBER_0 = 22;
+    int START_GAME = 22;
+    int NUMBER_0 = 23;
 
     public void setListener(MineSweeperView.ViewListener listener);
     public void onDraw(Canvas canvas);

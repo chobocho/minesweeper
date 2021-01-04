@@ -4,8 +4,8 @@ public class PlayState extends State {
     Board board;
     MineSweeperNotifyCallback minesweeper;
 
-    public PlayState(MineSweeperNotifyCallback mineSweper, Board board) {
-        this.minesweeper = mineSweper;
+    public PlayState(MineSweeperNotifyCallback mineSweeper, Board board) {
+        this.minesweeper = mineSweeper;
         this.board = board;
     }
 
