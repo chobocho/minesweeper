@@ -52,12 +52,9 @@ public class Tile {
             return false;
         }
 
-        if (this.boom) {
-            this.explode = true;
-        }
-
-        openState = true;
-        flag = false;
+        this.openState = true;
+        this.flag = false;
+        this.explode = hasBoom();
 
         return true;
     }
