@@ -50,6 +50,7 @@ public class MineSweeperImpl implements MineSweeper, MineSweeperNotifyCallback {
 
     private void initGame() {
         play_time = 0;
+        toolType =  MineSweeper.BOOM;
         board.init();
     }
 

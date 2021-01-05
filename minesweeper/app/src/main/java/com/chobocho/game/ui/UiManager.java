@@ -17,7 +17,9 @@ public interface UiManager {
     int NEW_GAME = 20;
     int RESUME = 21;
     int START_GAME = 22;
-    int NUMBER_0 = 23;
+    int BOOM_FLAG_BTN = 23;
+    int FLAG_BOOM_BTN = 24;
+    int NUMBER_0 = 25;
 
     public void setListener(MineSweeperView.ViewListener listener);
     public void onDraw(Canvas canvas);

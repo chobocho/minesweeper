@@ -115,7 +115,8 @@ public class State {
     }
 
     protected void onDrawFlagButton(int type, Canvas canvas, Paint paint) {
-        canvas.drawBitmap(images[type], null, flag_button.toRect(), paint);
+        int image_type = (type == MineSweeper.BOOM) ? UiManager.FLAG_BOOM_BTN : UiManager.BOOM_FLAG_BTN;
+        canvas.drawBitmap(images[image_type], null, flag_button.toRect(), paint);
     }
 
     protected void onDrawFlagCountButton(int count, Canvas canvas, Paint paint) {

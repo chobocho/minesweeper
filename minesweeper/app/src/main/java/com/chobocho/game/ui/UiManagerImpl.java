@@ -83,6 +83,9 @@ public class UiManagerImpl implements UiManager, GameObserver {
         mTile[RESUME] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.resume);
         mTile[START_GAME] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.start);
 
+        mTile[FLAG_BOOM_BTN] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.boom_key);
+        mTile[BOOM_FLAG_BTN] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.flag_key);
+
         mTile[NUMBER_0] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn0);
         mTile[NUMBER_0+1] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn1);
         mTile[NUMBER_0+2] = BitmapFactory.decodeResource(mContext.getResources(), R.drawable.tn2);
