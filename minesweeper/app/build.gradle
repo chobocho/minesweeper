@@ -3,8 +3,8 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdk 34
+    buildToolsVersion '34.0.0'
 
     def versionPropsFile = file('versioninfo.properties')
     def Properties versionInfo = new Properties()
@@ -12,7 +12,7 @@ android {
     if (versionPropsFile.canRead()) {
         versionInfo.load(new FileInputStream(versionPropsFile))
     } else {
-        versionInfo['VERSION_HEADER'] = "0.1105"
+        versionInfo['VERSION_HEADER'] = "0.1216"
         versionInfo['VERSION_CODE'] = 1
         versionInfo['MONTHLY_RELEASE_COUNT'] = 0
         versionInfo['BUILD_COUNT'] = 0
@@ -56,7 +56,7 @@ android {
     defaultConfig {
         applicationId "com.chobocho.minesweeper"
         minSdkVersion 29
-        targetSdkVersion 30
+        targetSdkVersion 34
         versionCode releaseVersionCode
         versionName "${versionHeader}.${thisYear}${thisMonth}${monthVersion}.${build_count}"
         setProperty("archivesBaseName", "minesweeper_$versionName")
@@ -65,13 +65,13 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
