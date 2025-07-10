@@ -78,7 +78,7 @@ public class State {
 
     public void onDraw(Canvas canvas) {
         paint.setColor(Color.LTGRAY);
-        canvas.drawRect(new Rect(0, 0, mProfile.screenWidth(), mProfile.screenHeight()), paint);
+        canvas.drawRect(new Rect(0, 0, canvas.getWidth(), canvas.getHeight()), paint);
 
         onDrawTimer(mineSweeper.getPlaytime(), canvas, paint);
         onDrawFlagButton(mineSweeper.getToolType(), canvas, paint);
